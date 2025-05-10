@@ -81,6 +81,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     except Exception as e:
         logger.error(f"Ошибка в команде /start: {e}")
 
+# === Обработчик сообщений ===
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     try:
         text = update.message.text
@@ -91,21 +92,81 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         if text == "Заказать дизайн / монтаж":
             await update.message.reply_text("Выберите нужную услугу:", reply_markup=get_services_menu())
 
-        elif text in [
-            "Превью YouTube", "Монтаж коротких видео (до 1 мин)",
-            "Монтаж длинных видео (до 10 мин)", "Логотип или оформление профиля",
-            "Обработка фото / ретушь"
-        ]:
+        elif text == "Превью YouTube":
             orders = load_orders()
-            user_orders = orders.get(str(user_id), 0)
-            user_orders += 1
+            user_orders = orders.get(str(user_id), 0) + 1
             orders[str(user_id)] = user_orders
             save_orders(orders)
 
-            await update.message.reply_text("✅ Спасибо! В течение 20 минут с вами свяжется наш менеджер.")
+            await update.message.reply_text("Цена 1490-KZT
+            🖼️ Спасибо за заказ на превью YouTube! В течение 20 минут с вами свяжется наш менеджер.")
             await context.bot.send_message(
                 chat_id=ADMIN_ID,
-                text=f"🚨 Новая заявка: {text}\n"
+                text=f"🚨 Новая заявка: Превью YouTube\n"
+                     f"👤 Пользователь: {username}\n"
+                     f"🆔 ID: {user_id}\n"
+                     f"📦 Всего заказов: {user_orders}"
+            )
+
+        elif text == "Монтаж коротких видео (до 1 мин)":
+            orders = load_orders()
+            user_orders = orders.get(str(user_id), 0) + 1
+            orders[str(user_id)] = user_orders
+            save_orders(orders)
+
+            await update.message.reply_text("Цена 1490-KZT
+            🎬 Спасибо за заказ на короткий видеомонтаж! Менеджер свяжется с вами в течение 20 минут.")
+            await context.bot.send_message(
+                chat_id=ADMIN_ID,
+                text=f"🚨 Новая заявка: Монтаж коротких видео\n"
+                     f"👤 Пользователь: {username}\n"
+                     f"🆔 ID: {user_id}\n"
+                     f"📦 Всего заказов: {user_orders}"
+            )
+
+        elif text == "Монтаж длинных видео (до 10 мин)":
+            orders = load_orders()
+            user_orders = orders.get(str(user_id), 0) + 1
+            orders[str(user_id)] = user_orders
+            save_orders(orders)
+
+            await update.message.reply_text("Цена 2990-KZT
+            🎥 Спасибо за заказ на длинный видеомонтаж! Ожидайте связи от менеджера.")
+            await context.bot.send_message(
+                chat_id=ADMIN_ID,
+                text=f"🚨 Новая заявка: Монтаж длинных видео\n"
+                     f"👤 Пользователь: {username}\n"
+                     f"🆔 ID: {user_id}\n"
+                     f"📦 Всего заказов: {user_orders}"
+            )
+
+        elif text == "Логотип или полное оформление профиля":
+            orders = load_orders()
+            user_orders = orders.get(str(user_id), 0) + 1
+            orders[str(user_id)] = user_orders
+            save_orders(orders)
+
+            await update.message.reply_text("Цена Логотип-990 KZT (три варианта)/Цена Полное Оформление профиля 7490-KZT (под ключ
+            🧩 Спасибо за заказ логотипа или оформления! Мы скоро с вами свяжемся.")
+            await context.bot.send_message(
+                chat_id=ADMIN_ID,
+                text=f"🚨 Новая заявка: Логотип или оформление профиля\n"
+                     f"👤 Пользователь: {username}\n"
+                     f"🆔 ID: {user_id}\n"
+                     f"📦 Всего заказов: {user_orders}"
+            )
+
+        elif text == "Обработка фото / ретушь":
+            orders = load_orders()
+            user_orders = orders.get(str(user_id), 0) + 1
+            orders[str(user_id)] = user_orders
+            save_orders(orders)
+
+            await update.message.reply_text(" Цена-500 KZT
+            📸 Спасибо за заказ ретуши/Обработки фото! Менеджер свяжется с вами в ближайшее время.")
+            await context.bot.send_message(
+                chat_id=ADMIN_ID,
+                text=f"🚨 Новая заявка: Обработка фото / ретушь\n"
                      f"👤 Пользователь: {username}\n"
                      f"🆔 ID: {user_id}\n"
                      f"📦 Всего заказов: {user_orders}"
